@@ -58,7 +58,6 @@ class SimpleTokenAuthentication(BaseAuthentication):
 @api_view(['POST'])
 def register(request):
     try:
-        # Extract user data
         username = request.data.get('username')
         email = request.data.get('email')
         password = request.data.get('password')
@@ -70,7 +69,6 @@ def register(request):
         # Hash password
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
         
-        # Create user
         user = User(username=username, email=email, password=hashed_password)
         user.save()
         
@@ -87,8 +85,7 @@ def register(request):
                     face_data.save()
             except Exception as e:
                 print(f"Face processing error: {e}")
-        
-        # Create portfolio with default wallets
+                
         portfolio = Portfolio(user=user)
         
         # Create default crypto wallets
@@ -140,7 +137,7 @@ def login(request):
         # Find user
         user = User.objects(username=username, password=hashed_password).first()
         if not user:
-            # Try with email
+            
             user = User.objects(email=username, password=hashed_password).first()
         
         if not user:
