@@ -1,5 +1,5 @@
 ﻿// Use configuration from config.js (loaded before this script in popup.html)
-// Fallback configuration if config.js fails to load
+
 if (!window.EXTENSION_CONFIG) {
   window.EXTENSION_CONFIG = {
     API_BASE_URL: 'http://localhost:8000',
@@ -17,14 +17,13 @@ if (!window.EXTENSION_CONFIG) {
   };
 }
 
-// Debug logging
 console.log('Extension Config:', window.EXTENSION_CONFIG);
 console.log('API Base URL:', window.EXTENSION_CONFIG.API_BASE_URL);
 
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('DOM Content Loaded');
   
-  // Clear payment badge when popup opens
+
   chrome.runtime.sendMessage({ type: 'CLEAR_PAYMENT_BADGE' });
   
   // Check if elements exist
@@ -36,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     walletSection: !!document.getElementById('wallet-section')
   });
   
-  // Handle extension closure during payment or payment setup
+  
   window.addEventListener('beforeunload', async () => {
     if (window.paymentInProgress || window.paymentInitiated) {
       console.log('Extension closing during payment process - cancelling...');
