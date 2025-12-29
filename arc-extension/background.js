@@ -1,4 +1,4 @@
-// Keep track of extension tab for payment flow
+
 let paymentTabId = null;
 
 console.log('=== ARC EXTENSION BACKGROUND SCRIPT LOADED ===');
@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   
   if (request.type === 'ARC_OPEN_TAB') {
     const targetUrl = request.url || chrome.runtime.getURL('popup.html');
-    // Try to find existing tab with our URL
+  
     chrome.tabs.query({ url: chrome.runtime.getURL('popup.html') + '*' }, (tabs) => {
       if (tabs && tabs.length > 0) {
         chrome.tabs.update(tabs[0].id, { active: true, url: targetUrl });
@@ -29,16 +29,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log('=== PAYMENT TRIGGER RECEIVED ===');
     console.log('Payment amount:', request.payload.amount);
     
-    // Store the payment amount
     chrome.storage.local.set({ arc_order_amount: request.payload.amount }, () => {
       console.log('Amount stored in background:', request.payload.amount);
       
-      // Set badge to indicate payment pending
       chrome.action.setBadgeText({ text: "PAY" });
       chrome.action.setBadgeBackgroundColor({ color: "#FF6B35" });
       console.log('Badge set to PAY');
       
-      // Open the extension as a new window
       console.log('Attempting to create popup window...');
       chrome.windows.create({
         url: chrome.runtime.getURL("popup.html"),
@@ -48,7 +45,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         focused: true
       }, (window) => {
         console.log('Extension window created successfully:', window);
-        // Store the tab ID from the window
         if (window && window.tabs && window.tabs.length > 0) {
           paymentTabId = window.tabs[0].id;
           console.log('Stored paymentTabId:', paymentTabId);
@@ -67,10 +63,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log('=== PAYMENT STATUS RECEIVED ===');
     console.log('Payment status:', request.payload);
     
-    // Relay payment status to the merchant site (Curve) via content script
     chrome.tabs.query({ url: ["http://localhost:5173/*", "http://127.0.0.1:5173/*","https://curve.rudraa.me/*"] }, function (tabs) {
       if (tabs && tabs.length > 0) {
-        // Found Curve tab, send message to content script
+      
         console.log('Found Curve tab:', tabs[0].id);
         chrome.tabs.sendMessage(tabs[0].id, {
           type: 'ARC_PAYMENT_STATUS',
@@ -79,7 +74,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           console.log('Message sent to content script:', response);
           if (chrome.runtime.lastError) {
             console.error('Error sending to content script:', chrome.runtime.lastError);
-            // Fallback: try script injection
+          
             chrome.scripting.executeScript({
               target: { tabId: tabs[0].id },
               func: (payloadData) => {
