@@ -86,12 +86,12 @@ const Layout = ({ children }) => {
           {/* Logo */}
           <div className="flex h-20 items-center justify-between px-4">
             <div className="flex items-center space-x-3">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center border-2 border-purple-400/40 bg-white/15 backdrop-blur-sm shadow-lg hover:scale-105 transition-transform duration-200 p-1">
-                <div className="w-14 h-14 rounded-full overflow-hidden bg-white/10 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center border-2 border-purple-400/50 bg-white/10 backdrop-blur-md shadow-lg hover:shadow-purple-500/50 hover:scale-110 hover:border-purple-400/80 transition-all duration-300 p-1 group">
+                <div className="w-14 h-14 rounded-full overflow-hidden bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
                   <img 
                     src="/arc.png" 
                     alt="ARC Logo" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
               </div>
