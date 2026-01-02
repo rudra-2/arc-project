@@ -72,6 +72,26 @@ const Login = () => {
             </div>
           </div>
 
+          {/* Demo Credentials Info */}
+          <div className="mb-4 glass rounded-xl p-4 border border-cyan-400/30 hover-glow transition-all duration-300 group">
+            <div className="flex items-center space-x-2 mb-3">
+              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+              <p className="text-xs font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">Demo Account</p>
+            </div>
+            <div className="space-y-2 text-xs text-gray-300 font-mono">
+              <div className="flex items-center space-x-2 group-hover:text-cyan-300 transition-colors">
+                <span className="text-gray-500">→</span>
+                <span>Username:</span>
+                <span className="text-cyan-400 font-semibold">investor1</span>
+              </div>
+              <div className="flex items-center space-x-2 group-hover:text-cyan-300 transition-colors">
+                <span className="text-gray-500">→</span>
+                <span>Password:</span>
+                <span className="text-cyan-400 font-semibold">password123</span>
+              </div>
+            </div>
+          </div>
+
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="glass-intense rounded-2xl p-6 space-y-5 hover-glow">
             <div className="text-center mb-5">
